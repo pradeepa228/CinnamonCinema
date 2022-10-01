@@ -28,4 +28,12 @@ public class MovieTheatreTests
         string output1 = MovieTheatre.TicketBooking(1, "SD");
         output1.Should().Be("A1 A2 A3");
     }
+    [TestCase(0)]
+    [TestCase(-1)]
+    public void Program_Throws_error_if_Customer_Requests_zero_seat(int noOfSeats)
+    {
+        var ex = Assert.Throws<ArgumentException>(() => MovieTheatre.TicketBooking(noOfSeats, "ABC"));
+        Assert.That(ex.Message, Is.EqualTo("Number of Seats should be greater than 0."));
+
+    }
 }

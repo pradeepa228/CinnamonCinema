@@ -20,6 +20,10 @@ namespace MovieTheatre
             string temporarySeat = "";
             int currentAllocationCount = 0;
 
+            if (noOfSeats <= 0 )
+            {
+                throw new ArgumentException("Number of Seats should be greater than 0.");
+            }
 
             for (int row = 1; row <= 5; row++)
             {
