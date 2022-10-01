@@ -30,10 +30,18 @@ public class MovieTheatreTests
     }
     [TestCase(0)]
     [TestCase(-1)]
-    public void Program_Throws_error_if_Customer_Requests_zero_seat(int noOfSeats)
+    public void Program_Throws_exception_if_Customer_Requests_zero_seat(int noOfSeats)
     {
         var ex = Assert.Throws<ArgumentException>(() => MovieTheatre.TicketBooking(noOfSeats, "ABC"));
         Assert.That(ex.Message, Is.EqualTo("Number of Seats should be greater than 0."));
 
     }
+    [TestCase(4)]
+    [TestCase(9)]
+    public void Program_Throws_exception_if_Customer_Requests_More_Than_3_Seats(int noOfSeats)
+    {
+        var ex = Assert.Throws<ArgumentException>(() => MovieTheatre.TicketBooking(noOfSeats, "ABC"));
+        Assert.That(ex.Message, Is.EqualTo("Number of Seats should be between 1 and 3."));
+    }
+
 }
