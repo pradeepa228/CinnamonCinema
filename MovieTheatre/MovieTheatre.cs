@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography.X509Certificates;
@@ -10,23 +11,76 @@ namespace MovieTheatre
 {
     public class MovieTheatre
     {
-        List<String> AllocatedSeatsList = new List<String>();
-        public bool TicketBooking(int noOfSeats)
+        public List<Booking> AllocatedSeatsList = new List<Booking>();
+
+
+        public string TicketBooking(int noOfSeats, string customerName)
         {
-            if (noOfSeats == 1)
+            string seatNumber = "";
+            string temporarySeat = "";
+            int currentAllocationCount = 0;
+
+
+            for (int row = 1; row <= 5; row++)
             {
-                AllocatedSeatsList.Add(noOfSeats.ToString() + noOfSeats.ToString());
-                Console.WriteLine(noOfSeats.ToString() + noOfSeats.ToString());
-
-
-
-                foreach (var seat in AllocatedSeatsList)
+                if (currentAllocationCount < noOfSeats)
                 {
-                    Console.WriteLine("Seat" +seat);
+                    Console.WriteLine(noOfSeats + customerName + row);
+                    temporarySeat = 1.ToString() + row.ToString();
+                    var alreadyAllocated = AllocatedSeatsList.Where(Booking => Booking.SeatLocation == temporarySeat);
+                    Console.WriteLine("Count" + AllocatedSeatsList.Count);
+
+                    if ((!alreadyAllocated.Any()) || AllocatedSeatsList.Count < noOfSeats)
+                    {
+                        Console.WriteLine("Not Allocated before,ALLOCATING");
+                        AllocatedSeatsList.Add(new Booking(customerName, temporarySeat));
+                        currentAllocationCount++;
+
+                    }
+                    else
+                    {
+                        Console.WriteLine(" Already allocated");
+                    }
                 }
-                //printSeatLocation - will convert Seat nukmber as A1, A2,....
+
             }
-            return true;
+            foreach (Booking bookingDetails in AllocatedSeatsList)
+            {
+                Console.WriteLine($"Booking: {bookingDetails.CustomerName}:{bookingDetails.SeatLocation}");
+            }
+            seatNumber = printSeatLocation();
+            return seatNumber.Trim();
+        }
+        public string printSeatLocation()
+        {
+            string row1 = "A";
+            string row2 = "B";
+            string row3 = "C";
+
+
+            string seatLocation = "";
+            string output = "";
+            foreach (Booking bookingDetails in AllocatedSeatsList)
+            {
+
+                if (bookingDetails.SeatLocation[0] == '1')
+                {
+                    seatLocation = row1 + bookingDetails.SeatLocation[1];
+
+                }
+                else if (bookingDetails.SeatLocation[0] == '2')
+                {
+                    seatLocation = row2 + bookingDetails.SeatLocation[1];
+
+                }
+                else if (bookingDetails.SeatLocation[0] == '3')
+                {
+                    seatLocation = row3 + bookingDetails.SeatLocation[1];
+
+                }
+                output = output + seatLocation + " ";
+            }
+            return output;
         }
     }
 }
