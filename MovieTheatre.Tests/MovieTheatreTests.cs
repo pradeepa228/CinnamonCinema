@@ -56,4 +56,16 @@ public class MovieTheatreTests
         string output2 = MovieTheatre.TicketBooking(3, "BERRY");
         output2.Should().Be("A5 B1 B2");        
     }
+
+
+    [Test]
+    public void Check_seats_Are_Allocated_Using_Random_Number_Generation()
+    {
+        Random rnd = new Random();
+        int noOfSeats = rnd.Next(1, 3);
+        Console.WriteLine(noOfSeats); 
+       
+        string output = MovieTheatre.TicketBooking(noOfSeats, "STRAWBERRY");
+       // output.Should().Be("A1 A2 A3");
+    }
 }
