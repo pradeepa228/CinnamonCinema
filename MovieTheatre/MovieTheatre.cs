@@ -41,10 +41,10 @@ namespace MovieTheatre
                 Console.WriteLine($"Booking: {bookingDetails.CustomerName}:{bookingDetails.SeatLocation}");
             }
 
-            seatNumber = printSeatLocation();
+            seatNumber = printSeatLocation(customerName);
             return seatNumber.Trim();
         }
-        public string printSeatLocation()
+        public string printSeatLocation(string customerName)
         {
             string row1 = "A";
             string row2 = "B";
@@ -54,19 +54,22 @@ namespace MovieTheatre
 
             foreach (Booking bookingDetails in AllocatedSeatsList)
             {
-                if (bookingDetails.SeatLocation[0] == '1')
+                if (customerName == bookingDetails.CustomerName)
                 {
-                    seatLocation = row1 + bookingDetails.SeatLocation[1];
+                    if (bookingDetails.SeatLocation[0] == '1')
+                    {
+                        seatLocation = row1 + bookingDetails.SeatLocation[1];
+                    }
+                    else if (bookingDetails.SeatLocation[0] == '2')
+                    {
+                        seatLocation = row2 + bookingDetails.SeatLocation[1];
+                    }
+                    else if (bookingDetails.SeatLocation[0] == '3')
+                    {
+                        seatLocation = row3 + bookingDetails.SeatLocation[1];
+                    }
+                    output = output + seatLocation + " ";
                 }
-                else if (bookingDetails.SeatLocation[0] == '2')
-                {
-                    seatLocation = row2 + bookingDetails.SeatLocation[1];
-                }
-                else if (bookingDetails.SeatLocation[0] == '3')
-                {
-                    seatLocation = row3 + bookingDetails.SeatLocation[1];
-                }
-                output = output + seatLocation + " ";
             }
             return output;
         }
@@ -76,12 +79,12 @@ namespace MovieTheatre
             string temporarySeat = "";
 
             for (int rowSeat = 1; rowSeat <= 5; rowSeat++)
-            {                
+            {
                 if (currentAllocationCount < noOfSeats)
                 {
                     temporarySeat = rowNumber.ToString() + rowSeat.ToString();
                     var alreadyAllocated = AllocatedSeatsList.Where(Booking => Booking.SeatLocation == temporarySeat);
-                    
+
                     if ((!alreadyAllocated.Any()) || AllocatedSeatsList.Count < noOfSeats)
                     {
                         AllocatedSeatsList.Add(new Booking(customerName, temporarySeat));

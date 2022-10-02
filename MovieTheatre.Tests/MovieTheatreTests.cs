@@ -26,7 +26,7 @@ public class MovieTheatreTests
         output.Should().Be("A1 A2");
 
         string output1 = MovieTheatre.TicketBooking(1, "SD");
-        output1.Should().Be("A1 A2 A3");
+        output1.Should().Be("A3");
     }
 
     [TestCase(0)]
@@ -52,8 +52,8 @@ public class MovieTheatreTests
         string output = MovieTheatre.TicketBooking(3, "RAMBO");
         output.Should().Be("A1 A2 A3");
         string output1 = MovieTheatre.TicketBooking(1, "IKKY");
-        output1.Should().Be("A1 A2 A3 A4");
+        output1.Should().Be("A4");
         string output2 = MovieTheatre.TicketBooking(3, "BERRY");
-        output2.Should().Be("A1 A2 A3 A4 A5 B1 B2");        
+        output2.Should().Be("A5 B1 B2");        
     }
 }
