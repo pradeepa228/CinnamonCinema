@@ -12,8 +12,6 @@ namespace MovieTheatre
     public class MovieTheatre
     {
         public List<Booking> AllocatedSeatsList = new List<Booking>();
-
-
         public string TicketBooking(int noOfSeats, string customerName)
         {
             string seatNumber = "";
@@ -36,12 +34,12 @@ namespace MovieTheatre
                 currentAlocationCount = updatedAlocationCount;
                 rowNumber++;
             }
-            foreach (Booking bookingDetails in AllocatedSeatsList)
-            {
-                Console.WriteLine($"Booking: {bookingDetails.CustomerName}:{bookingDetails.SeatLocation}");
-            }
 
             seatNumber = printSeatLocation(customerName);
+            if (AllocatedSeatsList.Count == 15)
+            {
+                Console.WriteLine("No more tickets available.");
+            }
             return seatNumber.Trim();
         }
         public string printSeatLocation(string customerName)
@@ -69,6 +67,7 @@ namespace MovieTheatre
                         seatLocation = row3 + bookingDetails.SeatLocation[1];
                     }
                     output = output + seatLocation + " ";
+                    Console.WriteLine($"Booking: {bookingDetails.CustomerName}:{bookingDetails.SeatLocation}");
                 }
             }
             return output;

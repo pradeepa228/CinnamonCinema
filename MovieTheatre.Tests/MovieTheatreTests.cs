@@ -18,7 +18,7 @@ public class MovieTheatreTests
         string output = MovieTheatre.TicketBooking(1, "ABC");
         output.Should().Be("A1");
     }
-    
+
     [Test]
     public void Check_2seats_Are_Alocated()
     {
@@ -37,7 +37,7 @@ public class MovieTheatreTests
         Assert.That(ex.Message, Is.EqualTo("Number of Seats should be greater than 0."));
 
     }
-    
+
     [TestCase(4)]
     [TestCase(9)]
     public void Program_Throws_exception_if_Customer_Requests_More_Than_3_Seats(int noOfSeats)
@@ -54,7 +54,7 @@ public class MovieTheatreTests
         string output1 = MovieTheatre.TicketBooking(1, "IKKY");
         output1.Should().Be("A4");
         string output2 = MovieTheatre.TicketBooking(3, "BERRY");
-        output2.Should().Be("A5 B1 B2");        
+        output2.Should().Be("A5 B1 B2");
     }
 
 
@@ -62,10 +62,19 @@ public class MovieTheatreTests
     public void Check_seats_Are_Allocated_Using_Random_Number_Generation()
     {
         Random rnd = new Random();
-        int noOfSeats = rnd.Next(1, 3);
-        Console.WriteLine(noOfSeats); 
-       
-        string output = MovieTheatre.TicketBooking(noOfSeats, "STRAWBERRY");
-       // output.Should().Be("A1 A2 A3");
+        int noOfSeats = 0;
+        string output;
+        int totalSeats = 0;
+        int iteration = 0;
+        string[] customers = new string[15] { "SAM", "ALPHA", "BETA", "GAMMA", "TINKU", "RINKU", "TWEETY", "SWEETY", "TWINKLE", "VIKRAM", "VEDHA", "ABC", "DEF", "GHI", "JKL" };
+        do
+        {
+            noOfSeats = rnd.Next(1, 3);
+            Console.WriteLine(noOfSeats);
+            totalSeats = totalSeats + noOfSeats;
+            output = MovieTheatre.TicketBooking(noOfSeats, customers[iteration]);
+            iteration++;
+        } while (totalSeats < 15);
+
     }
 }
