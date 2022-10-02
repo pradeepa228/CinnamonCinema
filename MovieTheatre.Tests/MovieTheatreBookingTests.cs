@@ -3,29 +3,29 @@ using FluentAssertions;
 
 namespace MovieTheatre.Tests;
 
-public class MovieTheatreTests
+public class MovieTheatreBookingTests
 {
-    private MovieTheatre MovieTheatre;
+    private MovieTheatreBooking MovieTheatreBooking;
     [SetUp]
     public void Setup()
     {
-        MovieTheatre = new MovieTheatre();
+        MovieTheatreBooking = new MovieTheatreBooking();
     }
 
     [Test]
     public void Check_FirstSeat_Is_Alocated()
     {
-        string output = MovieTheatre.TicketBooking(1, "ABC");
+        string output = MovieTheatreBooking.TicketBooking(1, "ABC");
         output.Should().Be("A1");
     }
 
     [Test]
     public void Check_2seats_Are_Alocated()
     {
-        string output = MovieTheatre.TicketBooking(2, "QWE");
+        string output = MovieTheatreBooking.TicketBooking(2, "QWE");
         output.Should().Be("A1 A2");
 
-        string output1 = MovieTheatre.TicketBooking(1, "SD");
+        string output1 = MovieTheatreBooking.TicketBooking(1, "SD");
         output1.Should().Be("A3");
     }
 
@@ -33,7 +33,7 @@ public class MovieTheatreTests
     [TestCase(-1)]
     public void Program_Throws_exception_if_Customer_Requests_zero_seat(int noOfSeats)
     {
-        var ex = Assert.Throws<ArgumentException>(() => MovieTheatre.TicketBooking(noOfSeats, "ABC"));
+        var ex = Assert.Throws<ArgumentException>(() => MovieTheatreBooking.TicketBooking(noOfSeats, "ABC"));
         Assert.That(ex.Message, Is.EqualTo("Number of Seats should be greater than 0."));
 
     }
@@ -42,18 +42,18 @@ public class MovieTheatreTests
     [TestCase(9)]
     public void Program_Throws_exception_if_Customer_Requests_More_Than_3_Seats(int noOfSeats)
     {
-        var ex = Assert.Throws<ArgumentException>(() => MovieTheatre.TicketBooking(noOfSeats, "ABC"));
+        var ex = Assert.Throws<ArgumentException>(() => MovieTheatreBooking.TicketBooking(noOfSeats, "ABC"));
         Assert.That(ex.Message, Is.EqualTo("Number of Seats should be between 1 and 3."));
     }
 
     [Test]
     public void Check_seats_Are_Split_between_Rows()
     {
-        string output = MovieTheatre.TicketBooking(3, "RAMBO");
+        string output = MovieTheatreBooking.TicketBooking(3, "RAMBO");
         output.Should().Be("A1 A2 A3");
-        string output1 = MovieTheatre.TicketBooking(1, "IKKY");
+        string output1 = MovieTheatreBooking.TicketBooking(1, "IKKY");
         output1.Should().Be("A4");
-        string output2 = MovieTheatre.TicketBooking(3, "BERRY");
+        string output2 = MovieTheatreBooking.TicketBooking(3, "BERRY");
         output2.Should().Be("A5 B1 B2");
     }
 
@@ -69,12 +69,11 @@ public class MovieTheatreTests
         string[] customers = new string[15] { "SAM", "ALPHA", "BETA", "GAMMA", "TINKU", "RINKU", "TWEETY", "SWEETY", "TWINKLE", "VIKRAM", "VEDHA", "ABC", "DEF", "GHI", "JKL" };
         do
         {
-            noOfSeats = rnd.Next(1, 3);
-            Console.WriteLine(noOfSeats);
+            noOfSeats = rnd.Next(1, 4);
             totalSeats = totalSeats + noOfSeats;
-            output = MovieTheatre.TicketBooking(noOfSeats, customers[iteration]);
+            output = MovieTheatreBooking.TicketBooking(noOfSeats, customers[iteration]);
             iteration++;
-        } while (totalSeats < 15);
+        } while (totalSeats <= 15);
 
     }
 }
